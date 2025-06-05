@@ -1,1 +1,18 @@
-<p>archive-list works!</p>
+<div class="archive-container">
+  <h2 class="section-title">Transmisiones Anteriores</h2>
+  
+  <div *ngIf="isLoading" class="loading">
+    Cargando transmisiones archivadas...
+  </div>
+  
+  <div *ngIf="!isLoading && archivedStreams.length === 0" class="no-streams">
+    No hay transmisiones archivadas disponibles.
+  </div>
+  
+  <div *ngIf="!isLoading && archivedStreams.length > 0" class="archive-grid">
+    <app-archive-card 
+      *ngFor="let stream of archivedStreams" 
+      [stream]="stream">
+    </app-archive-card>
+  </div>
+</div>

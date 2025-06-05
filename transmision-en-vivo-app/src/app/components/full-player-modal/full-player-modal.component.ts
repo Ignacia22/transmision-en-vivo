@@ -15,12 +15,19 @@ export class FullPlayerModalComponent implements OnInit {
   // URL segura para el iframe
   streamUrl: any;
   isVisible: boolean = false;
+  currentStreamUrl: string = 'https://www.youtube.com/embed/jfKfPfyJRdk'; // URL por defecto
 
   constructor(private streamService: StreamService) { }
 
   ngOnInit(): void {
-    // Obtener la URL de transmisión sin silenciar
-    this.streamUrl = this.streamService.getStreamUrl(false);
+    // Obtener la transmisión en vivo
+    this.streamService.getLiveStream().subscribe(stream => {
+      if (stream) {
+        this.currentStreamUrl = stream.streamUrl;
+      }
+      // Obtener la URL sanitizada sin silenciar
+      this.streamUrl = this.streamService.getSanitizedStreamUrl(this.currentStreamUrl, false);
+    });
   }
 
   // Se llama en cada ciclo de detección de cambios para verificar si se debe mostrar el modal

@@ -1,6 +1,8 @@
 <div class="streaming-container">
   <div class="streaming-header">
-    <div class="streaming-title">Transmisión en Vivo</div>
+    <div class="streaming-title">
+      {{ liveStream?.title || 'Transmisión en Vivo' }}
+    </div>
     <button class="live-button" (click)="openFullPlayer()">
       <span class="dot"></span>
       Ver transmisión en vivo
@@ -8,12 +10,23 @@
   </div>
   
   <div class="mini-player">
+    <div *ngIf="isLoading" class="loading">Cargando transmisión...</div>
+    
     <iframe 
+      *ngIf="!isLoading && liveStream"
       [src]="streamUrl" 
-      title="Transmisión en vivo" 
+      title="{{ liveStream.title || 'Transmisión en Vivo' }}"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
+    
+    <div *ngIf="!isLoading && !liveStream" class="no-stream">
+      No hay transmisiones en vivo en este momento
+    </div>
+  </div>
+  
+  <div *ngIf="liveStream?.description" class="stream-description">
+    {{ liveStream?.description }}
   </div>
 </div>

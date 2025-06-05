@@ -1,1 +1,17 @@
-<p>archive-card works!</p>
+<div class="archive-card">
+  <div class="card-thumbnail">
+    <img [src]="stream.thumbnailUrl" [alt]="stream.title">
+    <div class="duration">{{ getDuration(stream.startTime, stream.endTime) }}</div>
+  </div>
+  <div class="card-content">
+    <h3 class="card-title">{{ stream.title }}</h3>
+    <p class="card-date">{{ formatDate(stream.startTime) }}</p>
+    <p class="card-description">{{ stream.description }}</p>
+    <div class="card-footer">
+      <div class="categories">
+        <span *ngFor="let category of stream.categories" class="category">{{ category }}</span>
+      </div>
+      <a [routerLink]="['/archivo', stream.id]" class="view-button">Ver transmisión</a>
+    </div>
+  </div>
+</div>
