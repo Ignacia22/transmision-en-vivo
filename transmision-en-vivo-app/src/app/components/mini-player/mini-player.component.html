@@ -1,0 +1,19 @@
+<div class="streaming-container">
+  <div class="streaming-header">
+    <div class="streaming-title">Transmisión en Vivo</div>
+    <button class="live-button" (click)="openFullPlayer()">
+      <span class="dot"></span>
+      Ver transmisión en vivo
+    </button>
+  </div>
+  
+  <div class="mini-player">
+    <iframe 
+      [src]="streamUrl" 
+      title="Transmisión en vivo" 
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
