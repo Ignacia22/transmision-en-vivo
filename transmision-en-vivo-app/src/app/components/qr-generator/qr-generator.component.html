@@ -1,0 +1,60 @@
+<div class="qr-container">
+  <h2>Generador de Código QR de Prueba</h2>
+  
+  <div class="form-group">
+    <label for="baseUrl">URL base:</label>
+    <input 
+      type="text" 
+      id="baseUrl" 
+      [(ngModel)]="baseUrl" 
+      class="form-control"
+      placeholder="Ingresa la URL base (ej. http://localhost:4200)"
+    >
+  </div>
+  
+  <div class="form-group">
+    <label>Parámetros:</label>
+    <div class="checkbox-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="addAutoplay"> 
+        Añadir autoplay=true
+      </label>
+    </div>
+    <div class="checkbox-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="addQr"> 
+        Añadir qr=true
+      </label>
+    </div>
+    <div class="checkbox-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="addStream"> 
+        Añadir stream=live
+      </label>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="customPath">Ruta personalizada (opcional):</label>
+    <input 
+      type="text" 
+      id="customPath" 
+      [(ngModel)]="customPath" 
+      class="form-control"
+      placeholder="Ej. live o envivo (sin /)"
+    >
+  </div>
+  
+  <div class="form-group">
+    <button (click)="generateQR()" class="btn-generate">Generar QR</button>
+  </div>
+  
+  <div *ngIf="finalUrl" class="qr-result">
+    <h3>Escanea este código:</h3>
+    <img [src]="qrImageUrl" alt="Código QR" class="qr-image">
+    <p class="qr-url">URL: {{ finalUrl }}</p>
+    <p>
+      <a [href]="qrImageUrl" download="qr-code.png" class="download-link">Descargar Código QR</a>
+    </p>
+  </div>
+</div>

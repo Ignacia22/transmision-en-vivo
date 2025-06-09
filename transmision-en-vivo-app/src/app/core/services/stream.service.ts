@@ -16,7 +16,7 @@ export class StreamService {
       id: '1',
       title: 'Transmisión en Vivo: Noticias del día',
       description: 'Las noticias más importantes de la jornada en tiempo real.',
-      thumbnailUrl: 'https://via.placeholder.com/320x180',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=10',
       streamUrl: 'https://www.youtube.com/embed/jfKfPfyJRdk',
       isLive: true,
       startTime: new Date(),
@@ -26,7 +26,7 @@ export class StreamService {
       id: '2',
       title: 'Entrevista Exclusiva: Ministro de Economía',
       description: 'Análisis de las nuevas medidas económicas anunciadas por el gobierno.',
-      thumbnailUrl: 'https://via.placeholder.com/320x180',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=11',
       streamUrl: 'https://www.youtube.com/embed/K4TOrB7at0Y',
       isLive: false,
       startTime: new Date('2025-06-01T10:00:00'),
@@ -37,12 +37,45 @@ export class StreamService {
       id: '3',
       title: 'Reportaje Especial: Avances en Tecnología',
       description: 'Exploramos las nuevas tendencias tecnológicas que están transformando la industria.',
-      thumbnailUrl: 'https://via.placeholder.com/320x180',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=12',
       streamUrl: 'https://www.youtube.com/embed/5qap5aO4i9A',
       isLive: false,
       startTime: new Date('2025-05-25T15:00:00'),
       endTime: new Date('2025-05-25T16:00:00'),
       categories: ['Tecnología', 'Reportajes']
+    },
+    {
+      id: '4',
+      title: 'Debate: Futuro de la Energía Renovable',
+      description: 'Expertos discuten sobre las perspectivas y desafíos de la transición energética global.',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=13',
+      streamUrl: 'https://www.youtube.com/embed/jfKfPfyJRdk',
+      isLive: false,
+      startTime: new Date('2025-05-20T14:00:00'),
+      endTime: new Date('2025-05-20T15:30:00'),
+      categories: ['Medio Ambiente', 'Debate']
+    },
+    {
+      id: '5',
+      title: 'Presentación: Nuevas Políticas de Salud Pública',
+      description: 'El Ministerio de Salud anuncia importantes actualizaciones en el sistema sanitario nacional.',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=14',
+      streamUrl: 'https://www.youtube.com/embed/K4TOrB7at0Y',
+      isLive: false,
+      startTime: new Date('2025-05-18T10:00:00'),
+      endTime: new Date('2025-05-18T11:15:00'),
+      categories: ['Salud', 'Política']
+    },
+    {
+      id: '6',
+      title: 'Conferencia: Avances en Inteligencia Artificial',
+      description: 'Investigadores presentan los últimos desarrollos en IA y sus aplicaciones prácticas.',
+      thumbnailUrl: 'https://picsum.photos/320/180?random=15',
+      streamUrl: 'https://www.youtube.com/embed/5qap5aO4i9A',
+      isLive: false,
+      startTime: new Date('2025-05-15T16:00:00'),
+      endTime: new Date('2025-05-15T18:00:00'),
+      categories: ['Tecnología', 'Inteligencia Artificial']
     }
   ];
 
@@ -101,4 +134,23 @@ export class StreamService {
     // Sanitizar la URL para que Angular permita usarla en un iframe
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
+  ensureLiveStreamAvailable(): void {
+  // Esta función se asegura de que siempre haya una transmisión en vivo activa
+  const liveStream = this.mockStreams.find(stream => stream.isLive);
+  if (!liveStream) {
+    // Si no hay transmisiones en vivo, convertir la más reciente en "en vivo"
+    const streams = [...this.mockStreams];
+    streams.sort((a, b) => {
+      const dateA = a.startTime ? new Date(a.startTime).getTime() : 0;
+      const dateB = b.startTime ? new Date(b.startTime).getTime() : 0;
+      return dateB - dateA;
+    });
+    
+    if (streams.length > 0) {
+      streams[0].isLive = true;
+      this.mockStreams = streams;
+    }
+  }
+}
 }
