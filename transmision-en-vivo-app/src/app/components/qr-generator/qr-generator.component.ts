@@ -10,13 +10,19 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './qr-generator.component.css'
 })
 export class QrGeneratorComponent {
-  baseUrl: string = 'http://localhost:4200';
+  baseUrl: string = window.location.origin;
+
   customPath: string = '';
   addAutoplay: boolean = true;
   addQr: boolean = false;
   addStream: boolean = false;
   finalUrl: string = '';
   qrImageUrl: string = '';
+
+  constructor() {
+  // Esto detectará automáticamente la URL actual, sea localhost o Vercel
+  this.baseUrl = window.location.origin;
+  }
 
   generateQR() {
     let url = this.baseUrl.trim();
